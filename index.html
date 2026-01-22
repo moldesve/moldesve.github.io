@@ -6,7 +6,6 @@
     <title>Moldes.ve - Catálogo de Productos</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* TODO EL CSS ANTERIOR PERMANECE IGUAL */
         * {
             margin: 0;
             padding: 0;
@@ -125,42 +124,44 @@
             background: #0d8a8a;
         }
         
-        /* Categorías REDUCIDAS */
-        .categories {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-bottom: 25px;
+        /* CATEGORÍAS COMO SELECT */
+        .categories-container {
+            max-width: 500px;
+            margin: 0 auto 25px;
             padding: 0 15px;
         }
         
-        .category-tag {
+        .category-select {
+            width: 100%;
+            padding: 12px 20px;
             background: white;
-            padding: 8px 20px;
-            border-radius: 30px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s;
-            box-shadow: 0 3px 8px rgba(14, 165, 165, 0.15);
             border: 2px solid #e0f2f2;
+            border-radius: 10px;
             color: #0d7377;
-            font-size: 14px;
+            font-weight: 600;
+            font-size: 15px;
+            cursor: pointer;
+            box-shadow: 0 3px 10px rgba(14, 165, 165, 0.15);
+            outline: none;
+            transition: all 0.3s;
         }
         
-        .category-tag:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 12px rgba(14, 165, 165, 0.2);
-        }
-        
-        .category-tag.active {
-            background: #0ea5a5;
-            color: white;
+        .category-select:hover {
             border-color: #0ea5a5;
-            box-shadow: 0 5px 12px rgba(14, 165, 165, 0.25);
+            box-shadow: 0 5px 15px rgba(14, 165, 165, 0.2);
         }
         
-        /* GRID RESPONSIVE - MÁXIMO 3 PRODUCTOS POR FILA - ANCHO MÁXIMO 250px */
+        .category-select:focus {
+            border-color: #0ea5a5;
+            box-shadow: 0 0 0 3px rgba(14, 165, 165, 0.2);
+        }
+        
+        .category-select option {
+            padding: 10px;
+            font-weight: 500;
+        }
+        
+        /* GRID RESPONSIVE - MÁXIMO 3 PRODUCTOS POR FILA */
         .products-grid {
             display: grid;
             grid-template-columns: repeat(3, 250px);
@@ -188,19 +189,19 @@
             box-shadow: 0 8px 20px rgba(14, 165, 165, 0.25);
         }
         
-        /* CONTENEDOR DE IMAGEN CON RELACIÓN 16:9 FIJA */
+        /* CONTENEDOR DE IMAGEN - IMAGEN COMPLETA Y CENTRADA */
         .product-img-container {
             position: relative;
             width: 100%;
-            padding-top: 56.25%;
+            height: 200px;
             background-color: #f0f9f8;
             overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         
         .product-img {
-            position: absolute;
-            top: 0;
-            left: 0;
             width: 100%;
             height: 100%;
             display: flex;
@@ -212,9 +213,11 @@
         }
         
         .product-img img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+            width: auto;
+            height: auto;
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
         }
         
         .product-info {
@@ -291,6 +294,10 @@
                 gap: 15px;
             }
             
+            .product-img-container {
+                height: 180px;
+            }
+            
             .product-img {
                 font-size: 35px;
             }
@@ -305,11 +312,6 @@
             
             .product-price {
                 font-size: 18px;
-            }
-            
-            .category-tag {
-                padding: 7px 15px;
-                font-size: 13px;
             }
             
             h1 {
@@ -344,7 +346,7 @@
             }
         }
         
-        /* POPUP ESTILOS - RELACIÓN 16:9 - MODIFICACIONES SOLICITADAS */
+        /* POPUP ESTILOS */
         .popup-overlay {
             position: fixed;
             top: 0;
@@ -385,7 +387,7 @@
             transform: scale(1);
         }
         
-        /* Izquierda - Imágenes con relación 16:9 */
+        /* Izquierda - Imágenes */
         .popup-left {
             flex: 1;
             background-color: #f0f9f8;
@@ -397,18 +399,18 @@
             min-width: 300px;
         }
         
-        /* Contenedor de imagen principal con relación 16:9 */
+        /* Contenedor de imagen principal */
         .popup-image-container {
             width: 100%;
-            padding-top: 56.25%;
+            height: 350px;
             position: relative;
             overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         
         .popup-main-image {
-            position: absolute;
-            top: 0;
-            left: 0;
             width: 100%;
             height: 100%;
             display: flex;
@@ -420,102 +422,49 @@
         }
         
         .popup-main-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+            width: auto;
+            height: auto;
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
         }
         
-        /* GALERÍA DE IMÁGENES EN MINIATURA - AHORA VISIBLE */
-        .image-gallery {
+        /* BOTONES DE NAVEGACIÓN DE IMÁGENES */
+        .prev-image-btn, .next-image-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(14, 165, 165, 0.8);
+            color: white;
+            border: none;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            cursor: pointer;
             display: flex;
             justify-content: center;
-            gap: 10px;
-            padding: 15px 0;
-            width: 100%;
-            overflow-x: auto;
-            background-color: #f0f9f8;
+            align-items: center;
+            font-size: 16px;
+            transition: all 0.2s;
+            z-index: 10;
+            opacity: 0.7;
         }
         
-        .thumbnail {
-            width: 60px;
-            height: 60px;
-            border-radius: 8px;
-            overflow: hidden;
-            cursor: pointer;
-            border: 2px solid transparent;
-            transition: all 0.3s;
-            flex-shrink: 0;
-        }
-        
-        .thumbnail:hover {
-            border-color: #0ea5a5;
-        }
-        
-        .thumbnail.active {
-            border-color: #0ea5a5;
-            box-shadow: 0 0 8px rgba(14, 165, 165, 0.5);
-        }
-        
-        .thumbnail img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+        .prev-image-btn {
+            left: 15px;
         }
         
         .next-image-btn {
-            position: absolute;
             right: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            background-color: #0ea5a5;
-            color: white;
-            border: none;
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 16px;
-            box-shadow: 0 3px 8px rgba(14, 165, 165, 0.3);
-            transition: all 0.2s;
-            z-index: 10;
         }
         
-        .next-image-btn:hover {
+        .prev-image-btn:hover, .next-image-btn:hover {
             background-color: #0d8a8a;
+            opacity: 1;
             transform: translateY(-50%) scale(1.1);
         }
         
-        /* Botón anterior */
-        .prev-image-btn {
-            position: absolute;
-            left: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            background-color: #0ea5a5;
-            color: white;
-            border: none;
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 16px;
-            box-shadow: 0 3px 8px rgba(14, 165, 165, 0.3);
-            transition: all 0.2s;
-            z-index: 10;
-        }
-        
-        .prev-image-btn:hover {
-            background-color: #0d8a8a;
-            transform: translateY(-50%) scale(1.1);
-        }
-        
-        /* Derecha - Información CON UNA SOLA BARRA DE SCROLL */
+        /* Derecha - Información */
         .popup-right {
             flex: 1;
             padding: 30px;
@@ -533,7 +482,6 @@
             font-weight: 700;
         }
         
-        /* 1. PRECIO CON TAMAÑO MÁXIMO DE 18px */
         .popup-price {
             font-size: 18px;
             color: #0ea5a5;
@@ -565,39 +513,34 @@
             font-weight: 500;
         }
         
-        /* 2. BOTONES DE TAMAÑO PEQUEÑOS AL LADO DE LA PREGUNTA */
+        /* TAMAÑOS EDITABLES */
         .size-options {
             margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            flex-wrap: wrap;
         }
         
         .size-title {
             font-size: 16px;
             color: #0d7377;
             font-weight: 600;
-            margin-bottom: 0;
-            white-space: nowrap;
+            margin-bottom: 10px;
         }
         
         .size-buttons {
             display: flex;
-            gap: 8px;
+            flex-wrap: wrap;
+            gap: 10px;
         }
         
         .size-btn {
-            padding: 6px 12px;
+            padding: 8px 16px;
             background-color: #f0f9f8;
             border: 2px solid #c2e7e7;
-            border-radius: 6px;
+            border-radius: 8px;
             color: #0d7377;
             cursor: pointer;
             transition: all 0.2s;
-            font-weight: 500;
+            font-weight: 600;
             font-size: 14px;
-            white-space: nowrap;
         }
         
         .size-btn:hover {
@@ -608,33 +551,6 @@
             background-color: #0ea5a5;
             color: white;
             border-color: #0ea5a5;
-        }
-        
-        /* ETIQUETAS (TAGS) */
-        .tags-section {
-            margin-bottom: 20px;
-        }
-        
-        .tags-title {
-            font-size: 16px;
-            color: #0d7377;
-            margin-bottom: 10px;
-            font-weight: 600;
-        }
-        
-        .tags-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-        
-        .tag {
-            background-color: #e0f2f2;
-            color: #0d7377;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 13px;
-            font-weight: 500;
         }
         
         .characteristics {
@@ -656,7 +572,7 @@
             line-height: 1.5;
         }
         
-        /* Estilo para la barra de desplazamiento (SOLO UNA) */
+        /* Estilo para la barra de desplazamiento */
         .popup-right::-webkit-scrollbar {
             width: 6px;
         }
@@ -701,7 +617,7 @@
             color: #0ea5a5;
         }
         
-        /* 3. RESPONSIVE PARA EL POPUP - SCROLL COMPLETO EN MÓVIL */
+        /* RESPONSIVE PARA EL POPUP */
         @media (max-width: 768px) {
             .popup-content {
                 flex-direction: column;
@@ -718,6 +634,10 @@
             .popup-left {
                 min-height: 250px;
                 flex-shrink: 0;
+            }
+            
+            .popup-image-container {
+                height: 250px;
             }
             
             .popup-right {
@@ -737,15 +657,6 @@
             .popup-main-image {
                 font-size: 60px;
             }
-            
-            .image-gallery {
-                padding: 10px 0;
-            }
-            
-            .thumbnail {
-                width: 50px;
-                height: 50px;
-            }
         }
         
         @media (max-width: 480px) {
@@ -755,6 +666,10 @@
             
             .popup-left {
                 min-height: 200px;
+            }
+            
+            .popup-image-container {
+                height: 200px;
             }
             
             .popup-main-image {
@@ -770,7 +685,7 @@
             }
             
             .size-btn {
-                padding: 6px 10px;
+                padding: 6px 12px;
                 font-size: 13px;
             }
             
@@ -781,20 +696,9 @@
             .characteristics-text {
                 font-size: 13px;
             }
-            
-            .size-options {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 8px;
-            }
-            
-            .size-buttons {
-                width: 100%;
-                justify-content: flex-start;
-            }
         }
 
-        /* NUEVO: ESTILOS PARA EL FORMULARIO DE WHATSAPP */
+        /* ESTILOS PARA EL FORMULARIO DE WHATSAPP */
         .whatsapp-section {
             margin-top: 25px;
             padding-top: 20px;
@@ -829,7 +733,6 @@
             transform: translateY(-1px);
         }
 
-        /* 1. AVISO VISUAL ANTES DEL FORMULARIO - FONDO AMARILLO SUAVE */
         .fabrication-notice {
             background-color: #fff9e6;
             border: 1px solid #ffd54f;
@@ -1071,7 +974,7 @@
         </header>
         
         <main class="container">
-            <!-- Buscador REDUCIDO -->
+            <!-- Buscador -->
             <div class="search-container">
                 <div class="search-box">
                     <input type="text" placeholder="Buscar productos..." id="searchInput">
@@ -1079,13 +982,15 @@
                 </div>
             </div>
             
-            <!-- Categorías REDUCIDAS - SE GENERAN AUTOMÁTICAMENTE -->
-            <div class="categories" id="categoriesContainer">
-                <!-- Las categorías se cargan aquí automáticamente -->
-                <div class="category-tag active" data-category="all">Todos</div>
+            <!-- CATEGORÍAS COMO SELECT -->
+            <div class="categories-container">
+                <select class="category-select" id="categorySelect">
+                    <option value="all">Todos</option>
+                    <!-- Las categorías se cargan aquí automáticamente -->
+                </select>
             </div>
             
-            <!-- Todos los productos en grid de 3 columnas - SE GENERAN AUTOMÁTICAMENTE -->
+            <!-- Todos los productos en grid -->
             <div class="products-grid" id="productsGrid">
                 <!-- Los productos se cargan aquí automáticamente -->
                 <div class="loader">
@@ -1113,14 +1018,10 @@
                         </div>
                     </div>
                     
-                    <div class="image-gallery" id="imageGallery"></div>
-                    
-                    <!-- Botón anterior -->
+                    <!-- BOTONES DE NAVEGACIÓN DE IMÁGENES -->
                     <button class="prev-image-btn" id="prevImageBtn">
                         <i class="fas fa-chevron-left"></i>
                     </button>
-                    
-                    <!-- Botón siguiente -->
                     <button class="next-image-btn" id="nextImageBtn">
                         <i class="fas fa-chevron-right"></i>
                     </button>
@@ -1134,19 +1035,11 @@
                             Precio: $<span id="popupPriceValue">0.00</span> <span class="popup-currency" id="popupCurrency">USD</span>
                         </div>
                         
-                        <!-- 2. BOTONES DE TAMAÑO PEQUEÑOS AL LADO DE LA PREGUNTA -->
-                        <div class="size-options">
+                        <!-- TAMAÑOS EDITABLES -->
+                        <div class="size-options" id="sizeOptionsContainer">
                             <h3 class="size-title">Elegir tamaño:</h3>
-                            <div class="size-buttons" id="sizeOptions">
+                            <div class="size-buttons" id="sizeButtons">
                                 <!-- Los botones de tamaño se cargan aquí -->
-                            </div>
-                        </div>
-                        
-                        <!-- NUEVA SECCIÓN: ETIQUETAS (TAGS) -->
-                        <div class="tags-section" id="tagsSection" style="display: none;">
-                            <h3 class="tags-title">Etiquetas:</h3>
-                            <div class="tags-container" id="tagsContainer">
-                                <!-- Las etiquetas se cargan aquí -->
                             </div>
                         </div>
                         
@@ -1157,7 +1050,7 @@
                             </p>
                         </div>
 
-                        <!-- NUEVA SECCIÓN: FORMULARIO DE WHATSAPP -->
+                        <!-- FORMULARIO DE WHATSAPP -->
                         <div class="whatsapp-section">
                             <button class="whatsapp-btn" id="whatsappBtn">
                                 <i class="fab fa-whatsapp"></i> Pedir fabricación por WhatsApp
@@ -1212,48 +1105,149 @@
 
 <script>
 // =============================================
-// CONFIGURACIÓN - ¡EDITA SOLO ESTO!
+// DATOS DE LA TIENDA EN FORMATO JSON
 // =============================================
 
-// Ruta al archivo JSON (en el mismo directorio)
-const DATA_JSON_URL = 'data.json';
-
-// =============================================
-// NO MODIFIQUES NADA DEBAJO DE ESTA LÍNEA
-// =============================================
-
-// Variables globales
-let tiendaData = {
-  productos: [],
-  categorias: [],
-  config: {}
+const tiendaData = {
+    config: {
+        "Nombre Tienda": "moldes.ve",
+        "Tagline": "Moldes de silicona y más...",
+        "Logo": "https://i.ibb.co/ynbXdH7k/profile-image.jpg",
+        "WhatsApp": "584141234567",
+        "Moneda": "USD"
+    },
+    
+    categorias: [
+        { id: "all", nombre: "Todos" },
+        { id: "Corazones", nombre: "Corazones" },
+        { id: "San Valentín", nombre: "San Valentín" },
+        { id: "Santos", nombre: "Santos" },
+        { id: "Otros", nombre: "Otros" }
+    ],
+    
+    productos: [
+        {
+            id: 1,
+            nombre: "Molde Corazón Clásico",
+            categoria: "Corazones",
+            imagen: "https://images.unsplash.com/photo-1575224300306-1b8da36134ec?w=600&auto=format&fit=crop",
+            precio: 25.00,
+            descuento: 10,
+            tamanos: {
+                "4cm": 15.00,
+                "6cm": 18.00,
+                "8cm": 22.50,
+                "10cm": 25.00,
+                "12cm": 28.00
+            },
+            descripcion: "Molde de corazón clásico ideal para chocolates, jabones o velas. Hecho de silicona de alta calidad.",
+            caracteristicas: "Material: Silicona platino. Temperatura resistente: -40°C a 230°C. Flexible y fácil desmoldeo."
+        },
+        {
+            id: 2,
+            nombre: "Molde San Valentín Especial",
+            categoria: "San Valentín",
+            imagen: "https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?w=600&auto=format&fit=crop",
+            precio: 28.00,
+            descuento: 0,
+            tamanos: {
+                "8cm": 28.00,
+                "10cm": 32.00
+            },
+            descripcion: "Molde especial para San Valentín con diseño romántico. Perfecto para detalles especiales.",
+            caracteristicas: "Diseño exclusivo. Silicona alimentaria. Fácil limpieza. Reutilizable."
+        },
+        {
+            id: 3,
+            nombre: "Molde San José",
+            categoria: "Santos",
+            imagen: "https://images.unsplash.com/photo-1544966503-7cc5ac202191?w=600&auto=format&fit=crop",
+            precio: 35.00,
+            descuento: 15,
+            tamanos: {
+                "8cm": 29.75,
+                "10cm": 35.00,
+                "12cm": 40.00
+            },
+            descripcion: "Molde de San José con detalles precisos. Ideal para velas decorativas o chocolates artesanales.",
+            caracteristicas: "Alto nivel de detalle. Material no tóxico. Libre de BPA. Resistente al calor."
+        },
+        {
+            id: 4,
+            nombre: "Molde Flor Exótica",
+            categoria: "Otros",
+            imagen: "https://images.unsplash.com/photo-1562690868-60bbe7293e94?w=600&auto=format&fit=crop",
+            precio: 22.00,
+            descuento: 5,
+            tamanos: {
+                "6cm": 20.90,
+                "8cm": 22.00,
+                "10cm": 25.00
+            },
+            descripcion: "Molde de flor exótica con pétalos detallados. Perfecto para repostería creativa.",
+            caracteristicas: "Diseño naturalista. Silicona flexible. Apto para horno y freezer. Fácil almacenamiento."
+        },
+        {
+            id: 5,
+            nombre: "Molde Corazón Entrelazado",
+            categoria: "Corazones",
+            imagen: "https://images.unsplash.com/photo-1575224300306-1b8da36134ec?w=600&auto=format&fit=crop",
+            precio: 30.00,
+            descuento: 20,
+            tamanos: {
+                "8cm": 24.00,
+                "10cm": 30.00,
+                "12cm": 35.00
+            },
+            descripcion: "Diseño de corazones entrelazados para creaciones románticas y originales.",
+            caracteristicas: "Doble corazón. Detalle artístico. Material premium. Largo duración."
+        },
+        {
+            id: 6,
+            nombre: "Molde Virgen María",
+            categoria: "Santos",
+            imagen: "https://images.unsplash.com/photo-1581235720846-2af6c6beef90?w=600&auto=format&fit=crop",
+            precio: 38.00,
+            descuento: 10,
+            tamanos: {
+                "10cm": 34.20,
+                "12cm": 38.00
+            },
+            descripcion: "Molde de la Virgen María con gran nivel de detalle para piezas religiosas.",
+            caracteristicas: "Detalle preciso. Silicona de alta densidad. Fácil desmoldeo. Lavable en lavavajillas."
+        }
+    ]
 };
+
+// =============================================
+// VARIABLES GLOBALES
+// =============================================
 
 let currentProductId = null;
 let currentImageIndex = 0;
-let selectedSize = "8cm";
-let currentProductImages = [];
+let selectedSize = "";
+let productoImagenes = [];
 
-// Cargar datos desde el archivo JSON
-async function cargarDatosDesdeJSON() {
+// =============================================
+// FUNCIONES PRINCIPALES
+// =============================================
+
+// Función para limpiar URLs de imágenes
+function limpiarURLImagen(url) {
+    if (!url) return '';
+    return url.trim().replace(/\n/g, '').replace(/\r/g, '');
+}
+
+// Cargar datos desde JSON local
+async function cargarDatos() {
     try {
-        console.log('Cargando datos desde JSON...');
+        console.log('Cargando datos desde JSON local...');
         
-        const response = await fetch(DATA_JSON_URL);
-        if (!response.ok) throw new Error('Error cargando datos');
+        // Ya tenemos los datos en la variable tiendaData, pero simulamos una carga
+        // para mantener la estructura existente
         
-        const data = await response.json();
-        
-        // Asignar los datos
-        tiendaData.productos = data.productos || [];
-        tiendaData.categorias = data.categorias || [];
-        tiendaData.config = data.config || {};
-        
-        // Filtrar solo productos activos
-        tiendaData.productos = tiendaData.productos.filter(p => {
-            const activo = p.activo || p.Activo || p.ACTIVO;
-            return activo && (activo === true || activo === 'true' || activo === '1' || activo === 'sí' || activo === 'si');
-        });
+        // Simular una pequeña demora para mostrar el loader
+        await new Promise(resolve => setTimeout(resolve, 500));
         
         console.log('Datos cargados correctamente:', {
             productos: tiendaData.productos.length,
@@ -1278,7 +1272,7 @@ function mostrarProductos() {
             <div style="grid-column: 1 / -1; text-align: center; padding: 40px; color: #666;">
                 <i class="fas fa-box-open" style="font-size: 50px; margin-bottom: 20px; color: #ccc;"></i>
                 <h3>No hay productos disponibles</h3>
-                <p>Agrega productos a tu archivo JSON</p>
+                <p>Agrega productos al JSON</p>
             </div>
         `;
         return;
@@ -1286,38 +1280,33 @@ function mostrarProductos() {
     
     tiendaData.productos.forEach(producto => {
         // Calcular precio con descuento
-        const precioBase = parseFloat(producto.precio || producto.Precio || producto['Precio Base'] || 0);
-        const descuento = parseInt(producto.descuento || producto.Descuento || producto['Descuento%'] || 0);
+        const precioBase = parseFloat(producto.precio || 0);
+        const descuento = parseInt(producto.descuento || 0);
         const precioFinal = descuento > 0 ? 
             precioBase * (1 - descuento / 100) : 
             precioBase;
         
-        // Determinar qué imagen mostrar (primera imagen del array o imagen principal)
-        let imagenURL = '';
-        if (producto.imagenes && producto.imagenes.length > 0) {
-            imagenURL = producto.imagenes[0];
-        } else if (producto.imagen || producto.Imagen || producto['Imagen Principal']) {
-            imagenURL = producto.imagen || producto.Imagen || producto['Imagen Principal'];
-        }
-        
-        const tieneImagen = imagenURL && (imagenURL.startsWith('http') || imagenURL.startsWith('https') || imagenURL.startsWith('data:'));
+        // Obtener y limpiar URL de imagen
+        const imagenURL = limpiarURLImagen(producto.imagen || '');
+        const tieneImagen = imagenURL && (imagenURL.startsWith('http') || imagenURL.startsWith('https'));
         
         const card = document.createElement('div');
         card.className = 'product-card';
-        card.setAttribute('data-product', producto.id || producto.ID);
+        card.setAttribute('data-product', producto.id);
+        card.setAttribute('data-category', producto.categoria || '');
         
         card.innerHTML = `
             <div class="product-img-container">
                 <div class="product-img">
                     ${tieneImagen ? 
-                        `<img src="${imagenURL}" alt="${producto.nombre || producto.Nombre}" 
+                        `<img src="${imagenURL}" alt="${producto.nombre || 'Producto'}" 
                               onerror="this.style.display='none'; this.parentElement.innerHTML='<i class=\"fas fa-box\"></i>';">` : 
                         `<i class="fas fa-box"></i>`
                     }
                 </div>
             </div>
             <div class="product-info">
-                <h3 class="product-name">${producto.nombre || producto.Nombre || 'Producto sin nombre'}</h3>
+                <h3 class="product-name">${producto.nombre || 'Producto sin nombre'}</h3>
                 <div class="product-price">
                     ${descuento > 0 ? 
                         `<span class="old-price">$${precioBase.toFixed(2)}</span>` : 
@@ -1328,63 +1317,39 @@ function mostrarProductos() {
                         `<span class="discount-badge">-${descuento}%</span>` : 
                         ''
                     }
-                    <span>${tiendaData.config.moneda || tiendaData.config.Moneda || 'USD'}</span>
+                    <span>${tiendaData.config.Moneda || 'USD'}</span>
                 </div>
             </div>
         `;
         
-        card.addEventListener('click', () => abrirPopupProducto(producto.id || producto.ID));
+        card.addEventListener('click', () => abrirPopupProducto(parseInt(producto.id)));
         grid.appendChild(card);
     });
 }
 
-// Mostrar categorías
+// Mostrar categorías en el select
 function mostrarCategorias() {
-    const container = document.getElementById('categoriesContainer');
-    container.innerHTML = '';
+    const select = document.getElementById('categorySelect');
+    select.innerHTML = '';
     
-    // Agregar "Todos" primero
-    const todosBtn = document.createElement('div');
-    todosBtn.className = 'category-tag active';
-    todosBtn.setAttribute('data-category', 'all');
-    todosBtn.textContent = 'Todos';
-    todosBtn.addEventListener('click', () => filtrarPorCategoria('all'));
-    container.appendChild(todosBtn);
-    
-    // Agregar categorías desde JSON
-    if (tiendaData.categorias && tiendaData.categorias.length > 0) {
-        tiendaData.categorias.forEach(categoria => {
-            const tag = document.createElement('div');
-            tag.className = 'category-tag';
-            tag.setAttribute('data-category', categoria.id || categoria.ID || categoria.nombre || categoria.Nombre);
-            tag.textContent = categoria.nombre || categoria.Nombre || 'Categoría';
-            tag.addEventListener('click', () => filtrarPorCategoria(categoria.id || categoria.ID || categoria.nombre || categoria.Nombre));
-            container.appendChild(tag);
-        });
-    }
+    tiendaData.categorias.forEach(categoria => {
+        const option = document.createElement('option');
+        option.value = categoria.id;
+        option.textContent = categoria.nombre;
+        select.appendChild(option);
+    });
 }
 
 // Filtrar productos por categoría
 function filtrarPorCategoria(categoriaId) {
-    // Actualizar botones activos
-    document.querySelectorAll('.category-tag').forEach(tag => {
-        tag.classList.remove('active');
-        if (tag.getAttribute('data-category') === categoriaId) {
-            tag.classList.add('active');
-        }
-    });
-    
-    // Filtrar productos
     const cards = document.querySelectorAll('.product-card');
+    
     cards.forEach(card => {
-        const productId = card.getAttribute('data-product');
-        const producto = tiendaData.productos.find(p => (p.id || p.ID) == productId);
-        
-        if (categoriaId === 'all' || !producto) {
+        if (categoriaId === 'all') {
             card.style.display = 'flex';
         } else {
-            const categoriaProducto = producto.categoria || producto.Categoría || producto.Categoria;
-            card.style.display = categoriaProducto == categoriaId ? 'flex' : 'none';
+            const categoriaProducto = card.getAttribute('data-category');
+            card.style.display = categoriaProducto === categoriaId ? 'flex' : 'none';
         }
     });
 }
@@ -1399,9 +1364,9 @@ function configurarBuscador() {
         const cards = document.querySelectorAll('.product-card');
         
         cards.forEach(card => {
-            const productId = card.getAttribute('data-product');
-            const producto = tiendaData.productos.find(p => (p.id || p.ID) == productId);
-            const nombre = (producto.nombre || producto.Nombre || '').toLowerCase();
+            const productId = parseInt(card.getAttribute('data-product'));
+            const producto = tiendaData.productos.find(p => parseInt(p.id) === productId);
+            const nombre = (producto.nombre || '').toLowerCase();
             
             card.style.display = nombre.includes(termino) || termino === '' ? 'flex' : 'none';
         });
@@ -1416,63 +1381,70 @@ function configurarTienda() {
     const config = tiendaData.config;
     
     // Nombre de la tienda
-    if (config.nombreTienda || config['Nombre Tienda'] || config.NOMBRE_TIENDA) {
-        document.getElementById('storeName').textContent = config.nombreTienda || config['Nombre Tienda'] || config.NOMBRE_TIENDA;
+    if (config["Nombre Tienda"]) {
+        document.getElementById('storeName').textContent = config["Nombre Tienda"];
     }
     
     // Tagline
-    if (config.tagline || config.Tagline || config.TAGLINE) {
-        document.getElementById('storeTagline').textContent = config.tagline || config.Tagline || config.TAGLINE;
+    if (config.Tagline) {
+        document.getElementById('storeTagline').textContent = config.Tagline;
     }
     
     // Logo/Imagen de perfil
-    if (config.logo || config.Logo || config.LOGO) {
-        document.getElementById('profileImage').src = config.logo || config.Logo || config.LOGO;
+    if (config.Logo) {
+        document.getElementById('profileImage').src = config.Logo;
     }
     
     // WhatsApp
-    if (config.whatsapp || config.WhatsApp || config.WHATSAPP) {
-        window.whatsappNumber = config.whatsapp || config.WhatsApp || config.WHATSAPP;
+    if (config.WhatsApp) {
+        window.whatsappNumber = config.WhatsApp;
     }
     
     // Año del copyright
     const year = new Date().getFullYear();
-    const nombreTienda = config.nombreTienda || config['Nombre Tienda'] || config.NOMBRE_TIENDA || 'moldes.ve';
+    const nombreTienda = config["Nombre Tienda"] || 'moldes.ve';
     document.getElementById('footerText').textContent = 
         `© ${year} ${nombreTienda} - Todos los derechos reservados`;
 }
 
 // Funcionalidad del popup
 function abrirPopupProducto(productId) {
-    const producto = tiendaData.productos.find(p => (p.id || p.ID) == productId);
+    const producto = tiendaData.productos.find(p => parseInt(p.id) === productId);
     if (!producto) return;
     
     currentProductId = productId;
     currentImageIndex = 0;
     
-    // Obtener array de imágenes
-    currentProductImages = [];
-    if (producto.imagenes && Array.isArray(producto.imagenes)) {
-        currentProductImages = producto.imagenes;
-    } else if (producto.imagen || producto.Imagen || producto['Imagen Principal']) {
-        currentProductImages = [producto.imagen || producto.Imagen || producto['Imagen Principal']];
+    // Obtener imágenes del producto
+    productoImagenes = [];
+    const imagenPrincipal = limpiarURLImagen(producto.imagen || '');
+    
+    if (imagenPrincipal && (imagenPrincipal.startsWith('http') || imagenPrincipal.startsWith('https'))) {
+        productoImagenes.push(imagenPrincipal);
+    }
+    
+    // Si hay imágenes adicionales en el producto, agregarlas
+    if (producto.imagenesAdicionales && Array.isArray(producto.imagenesAdicionales)) {
+        producto.imagenesAdicionales.forEach(img => {
+            const imgLimpia = limpiarURLImagen(img);
+            if (imgLimpia && imgLimpia.startsWith('http')) {
+                productoImagenes.push(imgLimpia);
+            }
+        });
     }
     
     // Actualizar información del popup
-    document.getElementById('popupProductName').textContent = producto.nombre || producto.Nombre || 'Producto';
-    document.getElementById('popupCharacteristics').textContent = producto.descripcion || producto.Descripción || producto.Descripcion || producto.caracteristicas || producto.Características || '';
+    document.getElementById('popupProductName').textContent = producto.nombre || 'Producto';
+    document.getElementById('popupCharacteristics').textContent = producto.descripcion || producto.caracteristicas || 'Sin descripción disponible';
     
-    // Actualizar imagen principal
-    actualizarImagenPopup();
-    
-    // Actualizar miniaturas
-    actualizarMiniaturas();
+    // Mostrar primera imagen
+    mostrarImagenPopup(0);
     
     // Actualizar precios y tamaños
     actualizarPreciosYTamanos(producto);
     
-    // Actualizar etiquetas (tags)
-    actualizarEtiquetas(producto);
+    // Configurar botones de navegación de imágenes
+    configurarBotonesImagenes();
     
     // Ocultar formulario de WhatsApp si estaba abierto
     document.getElementById('whatsappForm').classList.remove('active');
@@ -1484,63 +1456,69 @@ function abrirPopupProducto(productId) {
     document.body.style.overflow = 'hidden';
 }
 
-function actualizarImagenPopup() {
+// Mostrar imagen específica en el popup
+function mostrarImagenPopup(index) {
     const popupImage = document.getElementById('popupMainImage');
     
-    if (currentProductImages.length === 0) {
-        popupImage.innerHTML = '<i class="fas fa-box"></i>';
-        return;
-    }
-    
-    const imagenURL = currentProductImages[currentImageIndex];
-    if (imagenURL && (imagenURL.startsWith('http') || imagenURL.startsWith('https') || imagenURL.startsWith('data:'))) {
-        popupImage.innerHTML = `<img src="${imagenURL}" alt="Imagen ${currentImageIndex + 1} del producto">`;
+    if (productoImagenes.length > 0 && index < productoImagenes.length) {
+        popupImage.innerHTML = `<img src="${productoImagenes[index]}" alt="Imagen ${index + 1} del producto">`;
+        currentImageIndex = index;
     } else {
         popupImage.innerHTML = '<i class="fas fa-box"></i>';
     }
+    
+    // Mostrar u ocultar botones de navegación
+    const prevBtn = document.getElementById('prevImageBtn');
+    const nextBtn = document.getElementById('nextImageBtn');
+    
+    if (productoImagenes.length <= 1) {
+        prevBtn.style.display = 'none';
+        nextBtn.style.display = 'none';
+    } else {
+        prevBtn.style.display = 'flex';
+        nextBtn.style.display = 'flex';
+    }
 }
 
-function actualizarMiniaturas() {
-    const gallery = document.getElementById('imageGallery');
+// Configurar botones de navegación de imágenes
+function configurarBotonesImagenes() {
+    const prevBtn = document.getElementById('prevImageBtn');
+    const nextBtn = document.getElementById('nextImageBtn');
     
-    if (currentProductImages.length <= 1) {
-        gallery.innerHTML = '';
-        return;
-    }
+    // Limpiar event listeners anteriores
+    const prevClone = prevBtn.cloneNode(true);
+    const nextClone = nextBtn.cloneNode(true);
+    prevBtn.parentNode.replaceChild(prevClone, prevBtn);
+    nextBtn.parentNode.replaceChild(nextClone, nextBtn);
     
-    gallery.innerHTML = '';
+    // Nueva referencia a los botones
+    const newPrevBtn = document.getElementById('prevImageBtn');
+    const newNextBtn = document.getElementById('nextImageBtn');
     
-    currentProductImages.forEach((imagenURL, index) => {
-        const thumbnail = document.createElement('div');
-        thumbnail.className = `thumbnail ${index === currentImageIndex ? 'active' : ''}`;
-        thumbnail.setAttribute('data-index', index);
-        
-        if (imagenURL && (imagenURL.startsWith('http') || imagenURL.startsWith('https') || imagenURL.startsWith('data:'))) {
-            thumbnail.innerHTML = `<img src="${imagenURL}" alt="Miniatura ${index + 1}">`;
-        } else {
-            thumbnail.innerHTML = '<i class="fas fa-box"></i>';
-        }
-        
-        thumbnail.addEventListener('click', () => {
-            currentImageIndex = index;
-            actualizarImagenPopup();
-            actualizarMiniaturas();
-        });
-        
-        gallery.appendChild(thumbnail);
+    newPrevBtn.addEventListener('click', () => {
+        let newIndex = currentImageIndex - 1;
+        if (newIndex < 0) newIndex = productoImagenes.length - 1;
+        mostrarImagenPopup(newIndex);
+    });
+    
+    newNextBtn.addEventListener('click', () => {
+        let newIndex = currentImageIndex + 1;
+        if (newIndex >= productoImagenes.length) newIndex = 0;
+        mostrarImagenPopup(newIndex);
     });
 }
 
+// Actualizar precios y tamaños en el popup (TAMAÑOS EDITABLES)
 function actualizarPreciosYTamanos(producto) {
-    const precioBase = parseFloat(producto.precio || producto.Precio || producto['Precio Base'] || 0);
-    const descuento = parseInt(producto.descuento || producto.Descuento || producto['Descuento%'] || 0);
+    const precioBase = parseFloat(producto.precio || 0);
+    const descuento = parseInt(producto.descuento || 0);
     const precioFinal = descuento > 0 ? 
         precioBase * (1 - descuento / 100) : 
         precioBase;
     
     // Mostrar precio
     const precioElement = document.getElementById('popupPrice');
-    const moneda = tiendaData.config.moneda || tiendaData.config.Moneda || 'USD';
+    const moneda = tiendaData.config.Moneda || 'USD';
     
     let precioHTML = '';
     if (descuento > 0) {
@@ -1559,99 +1537,57 @@ function actualizarPreciosYTamanos(producto) {
     
     precioElement.innerHTML = `Precio: ${precioHTML}`;
     
-    // Crear botones de tamaños
-    const tamanosTexto = producto.tamanos || producto.Tamaños || producto['Tamaños Disponibles'] || '';
-    const sizeButtons = document.getElementById('sizeOptions');
+    // Crear botones de tamaños EDITABLES
+    const tamanos = producto.tamanos || {};
+    const sizeButtons = document.getElementById('sizeButtons');
+    const sizeOptionsContainer = document.getElementById('sizeOptionsContainer');
     sizeButtons.innerHTML = '';
     
-    if (tamanosTexto) {
-        try {
-            // Intentar parsear como JSON
-            const tamanos = typeof tamanosTexto === 'string' ? JSON.parse(tamanosTexto) : tamanosTexto;
-            const tamanoKeys = Object.keys(tamanos);
-            
-            if (tamanoKeys.length > 0) {
-                tamanoKeys.forEach((tamano, index) => {
-                    const precioTamano = parseFloat(tamanos[tamano]);
-                    const precioConDescuento = descuento > 0 ? 
-                        precioTamano * (1 - descuento / 100) : 
-                        precioTamano;
-                    
-                    const button = document.createElement('button');
-                    button.className = `size-btn ${index === 0 ? 'active' : ''}`;
-                    button.setAttribute('data-size', tamano);
-                    button.setAttribute('data-price', precioConDescuento);
-                    button.textContent = tamano;
-                    
-                    button.addEventListener('click', function() {
-                        document.querySelectorAll('.size-btn').forEach(btn => btn.classList.remove('active'));
-                        this.classList.add('active');
-                        selectedSize = this.getAttribute('data-size');
-                        document.getElementById('popupPriceValue').textContent = parseFloat(this.getAttribute('data-price')).toFixed(2);
-                    });
-                    
-                    sizeButtons.appendChild(button);
-                });
-                
-                // Establecer primer tamaño como seleccionado
-                selectedSize = tamanoKeys[0];
-            } else {
-                crearBotonUnicoTamaño(precioFinal);
-            }
-        } catch (e) {
-            // Si no es JSON válido, mostrar un solo botón
-            crearBotonUnicoTamaño(precioFinal);
-        }
-    } else {
-        // Sin tamaños específicos
-        crearBotonUnicoTamaño(precioFinal);
-    }
-}
-
-function actualizarEtiquetas(producto) {
-    const tagsSection = document.getElementById('tagsSection');
-    const tagsContainer = document.getElementById('tagsContainer');
-    tagsContainer.innerHTML = '';
+    const tamanoKeys = Object.keys(tamanos);
     
-    // Obtener etiquetas del producto
-    let etiquetas = [];
-    if (producto.etiquetas && Array.isArray(producto.etiquetas)) {
-        etiquetas = producto.etiquetas;
-    } else if (producto.etiquetas || producto.Etiquetas || producto.tags || producto.Tags) {
-        // Intentar parsear si es una cadena JSON
-        const tagsTexto = producto.etiquetas || producto.Etiquetas || producto.tags || producto.Tags;
-        try {
-            etiquetas = typeof tagsTexto === 'string' ? JSON.parse(tagsTexto) : tagsTexto;
-            if (!Array.isArray(etiquetas)) etiquetas = [];
-        } catch (e) {
-            etiquetas = [];
-        }
-    }
-    
-    // Si hay etiquetas, mostrarlas
-    if (etiquetas.length > 0) {
-        etiquetas.forEach(etiqueta => {
-            const tagElement = document.createElement('div');
-            tagElement.className = 'tag';
-            tagElement.textContent = etiqueta;
-            tagsContainer.appendChild(tagElement);
+    if (tamanoKeys.length > 0) {
+        // Ordenar tamaños por valor numérico (4cm, 6cm, 8cm, etc.)
+        tamanoKeys.sort((a, b) => {
+            const numA = parseFloat(a.replace('cm', ''));
+            const numB = parseFloat(b.replace('cm', ''));
+            return numA - numB;
         });
         
-        tagsSection.style.display = 'block';
+        tamanoKeys.forEach((tamano, index) => {
+            const precioTamano = parseFloat(tamanos[tamano]);
+            const precioConDescuento = descuento > 0 ? 
+                precioTamano * (1 - descuento / 100) : 
+                precioTamano;
+            
+            const button = document.createElement('button');
+            button.className = `size-btn ${index === 0 ? 'active' : ''}`;
+            button.setAttribute('data-size', tamano);
+            button.setAttribute('data-price', precioConDescuento);
+            button.textContent = tamano;
+            
+            button.addEventListener('click', function() {
+                document.querySelectorAll('.size-btn').forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+                selectedSize = this.getAttribute('data-size');
+                document.getElementById('popupPriceValue').textContent = parseFloat(this.getAttribute('data-price')).toFixed(2);
+            });
+            
+            sizeButtons.appendChild(button);
+        });
+        
+        // Establecer primer tamaño como seleccionado
+        selectedSize = tamanoKeys[0];
+        sizeOptionsContainer.style.display = 'block';
+        
+        // Actualizar precio al primer tamaño
+        const primerPrecio = descuento > 0 ? 
+            parseFloat(tamanos[tamanoKeys[0]]) * (1 - descuento / 100) : 
+            parseFloat(tamanos[tamanoKeys[0]]);
+        document.getElementById('popupPriceValue').textContent = primerPrecio.toFixed(2);
     } else {
-        tagsSection.style.display = 'none';
+        // Sin tamaños específicos, ocultar la sección
+        sizeOptionsContainer.style.display = 'none';
     }
-}
-
-function crearBotonUnicoTamaño(precio) {
-    const sizeButtons = document.getElementById('sizeOptions');
-    const button = document.createElement('button');
-    button.className = 'size-btn active';
-    button.setAttribute('data-size', 'único');
-    button.setAttribute('data-price', precio);
-    button.textContent = 'Único tamaño';
-    sizeButtons.appendChild(button);
-    selectedSize = 'único';
 }
 
 // Funcionalidad de WhatsApp
@@ -1668,10 +1604,6 @@ function configurarWhatsApp() {
         
         if (isOpening) {
             whatsappBtn.innerHTML = '<i class="fab fa-whatsapp"></i> Ocultar formulario';
-            // Desplazar hacia el aviso
-            setTimeout(() => {
-                fabricationNotice.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }, 100);
         } else {
             whatsappBtn.innerHTML = '<i class="fab fa-whatsapp"></i> Pedir fabricación por WhatsApp';
         }
@@ -1689,34 +1621,42 @@ function configurarWhatsApp() {
             return;
         }
         
-        // Validar teléfono (solo números)
+        // Validar teléfono (solo números, mínimo 10 dígitos)
         const telefonoLimpio = telefono.replace(/\D/g, '');
         if (telefonoLimpio.length < 10) {
-            alert('Por favor, ingrese un número de teléfono válido.');
+            alert('Por favor, ingrese un número de teléfono válido (mínimo 10 dígitos).');
             return;
         }
         
         // Obtener datos del producto actual
-        const producto = tiendaData.productos.find(p => (p.id || p.ID) == currentProductId);
+        const producto = tiendaData.productos.find(p => parseInt(p.id) === currentProductId);
         if (!producto) return;
         
-        const precio = document.querySelector('.size-btn.active').getAttribute('data-price');
-        const tamano = document.querySelector('.size-btn.active').getAttribute('data-size');
-        const moneda = tiendaData.config.moneda || tiendaData.config.Moneda || 'USD';
+        // Obtener precio y tamaño seleccionado
+        const sizeBtnActive = document.querySelector('.size-btn.active');
+        let precio = parseFloat(document.getElementById('popupPriceValue').textContent);
+        let tamano = 'Único';
+        
+        if (sizeBtnActive) {
+            precio = parseFloat(sizeBtnActive.getAttribute('data-price'));
+            tamano = sizeBtnActive.getAttribute('data-size');
+        }
+        
+        const moneda = tiendaData.config.Moneda || 'USD';
         
         // Crear mensaje para WhatsApp
         const mensaje = `¡Hola! Quiero solicitar fabricación de:%0A%0A` +
-                       `*Producto:* ${producto.nombre || producto.Nombre}%0A` +
+                       `*Producto:* ${producto.nombre || 'Producto'}%0A` +
                        `*Tamaño:* ${tamano}%0A` +
-                       `*Precio:* $${parseFloat(precio).toFixed(2)} ${moneda}%0A%0A` +
+                       `*Precio:* $${precio.toFixed(2)} ${moneda}%0A%0A` +
                        `*Mis datos:*%0A` +
                        `- Nombre: ${nombre} ${apellido}%0A` +
-                       `- Teléfono: ${telefono}%0A` +
+                       `- Teléfono: ${telefonoLimpio}%0A` +
                        `- Ciudad: ${ciudad}%0A%0A` +
                        `Me gustaría más información sobre este producto.`;
         
         // Número de WhatsApp (de configuración o por defecto)
-        const numeroWhatsApp = window.whatsappNumber || tiendaData.config.whatsapp || tiendaData.config.WhatsApp || tiendaData.config.WHATSAPP || '584141234567';
+        const numeroWhatsApp = window.whatsappNumber || tiendaData.config.WhatsApp || '584141234567';
         const whatsappURL = `https://wa.me/${numeroWhatsApp}?text=${mensaje}`;
         
         // Abrir WhatsApp
@@ -1735,49 +1675,18 @@ function configurarWhatsApp() {
     });
 }
 
-// Funcionalidad del carrusel de imágenes
-function configurarCarrusel() {
-    const prevBtn = document.getElementById('prevImageBtn');
-    const nextBtn = document.getElementById('nextImageBtn');
-    
-    prevBtn.addEventListener('click', () => {
-        if (currentProductImages.length <= 1) return;
-        currentImageIndex = (currentImageIndex - 1 + currentProductImages.length) % currentProductImages.length;
-        actualizarImagenPopup();
-        actualizarMiniaturas();
-    });
-    
-    nextBtn.addEventListener('click', () => {
-        if (currentProductImages.length <= 1) return;
-        currentImageIndex = (currentImageIndex + 1) % currentProductImages.length;
-        actualizarImagenPopup();
-        actualizarMiniaturas();
-    });
-}
-
 // Inicializar aplicación
 async function inicializarAplicacion() {
     // Mostrar loader
     document.getElementById('loader').classList.add('active');
     
     // Cargar datos desde JSON
-    const exito = await cargarDatosDesdeJSON();
+    const exito = await cargarDatos();
     
     if (!exito) {
         document.getElementById('loader').innerHTML = `
             <i class="fas fa-exclamation-triangle" style="color: #e74c3c;"></i>
-            <p>Error cargando productos desde el archivo JSON</p>
-            <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-top: 15px; text-align: left; max-width: 500px; margin-left: auto; margin-right: auto;">
-                <p style="font-size: 14px; margin-bottom: 10px;"><strong>Posibles causas:</strong></p>
-                <ol style="font-size: 13px; text-align: left; margin-left: 20px;">
-                    <li>El archivo data.json no existe</li>
-                    <li>El archivo data.json tiene errores de sintaxis</li>
-                    <li>Problema temporal de conexión</li>
-                </ol>
-                <p style="font-size: 12px; margin-top: 10px;">
-                    Verifica que el archivo data.json esté en el mismo directorio que index.html.
-                </p>
-            </div>
+            <p>Error cargando productos</p>
         `;
         return;
     }
@@ -1793,14 +1702,17 @@ async function inicializarAplicacion() {
     mostrarProductos();
     mostrarCategorias();
     
+    // Configurar filtro de categorías
+    const categorySelect = document.getElementById('categorySelect');
+    categorySelect.addEventListener('change', function() {
+        filtrarPorCategoria(this.value);
+    });
+    
     // Configurar buscador
     configurarBuscador();
     
     // Configurar WhatsApp
     configurarWhatsApp();
-    
-    // Configurar carrusel de imágenes
-    configurarCarrusel();
     
     // Configurar eventos del popup
     document.getElementById('closePopup').addEventListener('click', cerrarPopup);
