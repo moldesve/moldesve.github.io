@@ -1673,24 +1673,31 @@ footer {
 
         // ===================== WHATSAPP FUNCTIONALITY =====================
         
-        whatsappBtn.addEventListener('click', function() {
-            const isOpening = !whatsappForm.classList.contains('active');
-            whatsappForm.classList.toggle('active');
-            
-            if (whatsappForm.classList.contains('active')) {
-                fabricationNotice.classList.add('active');
-                whatsappBtn.innerHTML = '<i class="fab fa-whatsapp"></i> Ocultar formulario';
-                
-                setTimeout(() => {
-                    if (fabricationNotice) {
-                        fabricationNotice.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    }
-                }, 100);
-            } else {
-                fabricationNotice.classList.remove('active');
-                whatsappBtn.innerHTML = '<i class="fab fa-whatsapp"></i> Pedir fabricación por WhatsApp';
+       whatsappBtn.addEventListener('click', function() {
+    const isOpening = !whatsappForm.classList.contains('active');
+    whatsappForm.classList.toggle('active');
+    
+    if (whatsappForm.classList.contains('active')) {
+        fabricationNotice.classList.add('active');
+        whatsappBtn.innerHTML = '<i class="fab fa-whatsapp"></i> Ocultar formulario';
+        
+        setTimeout(() => {
+            if (fabricationNotice) {
+                const popupRight = document.querySelector('.popup-right');
+                if (popupRight) {
+                    const noticeTop = fabricationNotice.offsetTop;
+                    popupRight.scrollTo({
+                        top: noticeTop - 20, // 20px de margen superior
+                        behavior: 'smooth'
+                    });
+                }
             }
-        });
+        }, 100);
+    } else {
+        fabricationNotice.classList.remove('active');
+        whatsappBtn.innerHTML = '<i class="fab fa-whatsapp"></i> Pedir fabricación por WhatsApp';
+    }
+});
 
         submitRequestBtn.addEventListener('click', function() {
             // Validar campos
