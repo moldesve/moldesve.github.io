@@ -127,6 +127,7 @@
         }
         
         /* ========== CATEGORÍAS HORIZONTALES CON SCROLL ========== */
+        /* MODIFICACIÓN 2: Centrar categorías en desktop, izquierda en móvil */
         .categories {
             display: flex;
             overflow-x: auto;
@@ -137,6 +138,13 @@
             padding: 0 15px 10px;
             gap: 10px;
             white-space: nowrap;
+            justify-content: center;
+        }
+        
+        @media (max-width: 600px) {
+            .categories {
+                justify-content: flex-start;
+            }
         }
         
         .categories::-webkit-scrollbar {
@@ -171,6 +179,7 @@
         }
         
         /* ========== PRODUCTOS GRID ========== */
+        /* MODIFICACIÓN 1: 3 productos en desktop, 2 en móvil */
         .products-grid {
             display: grid;
             grid-template-columns: repeat(3, 250px);
@@ -178,6 +187,81 @@
             margin-bottom: 20px;
             padding: 20px 0;
             justify-content: center;
+        }
+        
+        /* Tablet: 2 productos por fila */
+        @media (max-width: 850px) {
+            .products-grid {
+                grid-template-columns: repeat(2, 250px);
+                gap: 15px;
+            }
+        }
+        
+        /* Móvil: 2 productos por fila (siempre 2 en móvil) */
+        @media (max-width: 600px) {
+            .products-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+                padding: 20px 8px;
+            }
+            
+            .product-card {
+                width: 100%;
+                max-width: none;
+            }
+            
+            .product-img {
+                font-size: 35px;
+            }
+            
+            .product-info {
+                padding: 12px;
+            }
+            
+            .product-name {
+                font-size: 14px;
+                margin-bottom: 8px;
+            }
+            
+            .product-price {
+                font-size: 16px;
+            }
+            
+            .category-tag {
+                padding: 7px 15px;
+                font-size: 13px;
+            }
+            
+            h1 {
+                font-size: 20px;
+            }
+            
+            .profile-circle {
+                width: 70px;
+                height: 70px;
+            }
+            
+            .tagline {
+                font-size: 13px;
+            }
+            
+            .search-box input {
+                padding: 0 12px;
+                font-size: 14px;
+            }
+            
+            .search-box button {
+                padding: 0 12px;
+                font-size: 14px;
+            }
+            
+            .search-box {
+                height: 42px;
+            }
+            
+            .container {
+                padding: 0 8px;
+            }
         }
         
         .product-card {
@@ -281,88 +365,6 @@
         }
         
         /* ========== RESPONSIVE BREAKPOINTS ========== */
-        /* Tablet: 2 productos por fila */
-        @media (max-width: 850px) {
-            .products-grid {
-                grid-template-columns: repeat(2, 250px);
-                gap: 15px;
-            }
-        }
-        
-        /* Móvil: 2 productos por fila */
-        @media (max-width: 600px) {
-            .products-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 12px;
-                padding: 20px 8px;
-            }
-            
-            .product-card {
-                width: 100%;
-                max-width: none;
-            }
-            
-            .product-img {
-                font-size: 35px;
-            }
-            
-            .product-info {
-                padding: 12px;
-            }
-            
-            .product-name {
-                font-size: 14px;
-                margin-bottom: 8px;
-            }
-            
-            .product-price {
-                font-size: 16px;
-            }
-            
-            .category-tag {
-                padding: 7px 15px;
-                font-size: 13px;
-            }
-            
-            h1 {
-                font-size: 20px;
-            }
-            
-            .profile-circle {
-                width: 70px;
-                height: 70px;
-            }
-            
-            .tagline {
-                font-size: 13px;
-            }
-            
-            .search-box input {
-                padding: 0 12px;
-                font-size: 14px;
-            }
-            
-            .search-box button {
-                padding: 0 12px;
-                font-size: 14px;
-            }
-            
-            .search-box {
-                height: 42px;
-            }
-            
-            .container {
-                padding: 0 8px;
-            }
-        }
-        
-        /* Móvil muy pequeño: 1 producto por fila */
-        @media (max-width: 400px) {
-            .products-grid {
-                grid-template-columns: repeat(1, 1fr);
-                gap: 10px;
-            }
-        }
         
         /* ========== POPUP ========== */
         .popup-overlay {
@@ -483,15 +485,28 @@
             transform: translateY(-50%) scale(1.1);
         }
         
-        /* Derecha - Información */
+        /* Derecha - Información - MODIFICACIÓN 3: Reestructuración para botón fijo */
         .popup-right {
             flex: 1;
             padding: 30px;
             display: flex;
             flex-direction: column;
             min-width: 300px;
+            overflow: hidden;
+        }
+        
+        .popup-right-content {
+            flex: 1;
             overflow-y: auto;
-            max-height: 70vh;
+            padding-right: 10px;
+            margin-right: -10px;
+        }
+        
+        .popup-right-actions {
+            flex-shrink: 0;
+            padding-top: 20px;
+            margin-top: 20px;
+            border-top: 1px solid #e0f2f2;
         }
         
         .popup-product-name {
@@ -579,21 +594,21 @@
         }
         
         /* Barra de desplazamiento */
-        .popup-right::-webkit-scrollbar {
+        .popup-right-content::-webkit-scrollbar {
             width: 6px;
         }
         
-        .popup-right::-webkit-scrollbar-track {
+        .popup-right-content::-webkit-scrollbar-track {
             background: #f1f1f1;
             border-radius: 3px;
         }
         
-        .popup-right::-webkit-scrollbar-thumb {
+        .popup-right-content::-webkit-scrollbar-thumb {
             background: #0ea5a5;
             border-radius: 3px;
         }
         
-        .popup-right::-webkit-scrollbar-thumb:hover {
+        .popup-right-content::-webkit-scrollbar-thumb:hover {
             background: #0d8a8a;
         }
         
@@ -652,6 +667,19 @@
                 padding: 20px;
                 max-height: none;
                 overflow-y: visible;
+                display: flex;
+                flex-direction: column;
+            }
+            
+            .popup-right-content {
+                overflow-y: visible;
+                margin-right: 0;
+                padding-right: 0;
+            }
+            
+            .popup-right-actions {
+                margin-top: 15px;
+                padding-top: 15px;
             }
             
             .popup-product-name {
@@ -664,19 +692,6 @@
             
             .popup-main-image i {
                 font-size: 60px;
-            }
-            
-            .whatsapp-section {
-                margin-top: 20px;
-            }
-            
-            .whatsapp-btn, .submit-request-btn {
-                padding: 12px;
-                font-size: 15px;
-            }
-            
-            .whatsapp-form {
-                padding: 15px;
             }
         }
         
@@ -714,22 +729,12 @@
             .size-title {
                 font-size: 14px;
             }
-            
-            .whatsapp-btn, .submit-request-btn {
-                font-size: 14px;
-                padding: 10px;
-            }
-            
-            .whatsapp-form {
-                padding: 12px;
-            }
         }
         
         /* ========== WHATSAPP ========== */
+        /* MODIFICACIÓN 3: El botón está en .popup-right-actions, que es fijo */
         .whatsapp-section {
-            margin-top: 25px;
-            padding-top: 20px;
-            border-top: 1px solid #e0f2f2;
+            width: 100%;
         }
 
         .whatsapp-btn {
@@ -1024,7 +1029,7 @@
         <p id="footerText">© 2023 moldes.ve - Todos los derechos reservados</p>
     </footer>
     
-    <!-- POPUP DE PRODUCTO -->
+    <!-- POPUP DE PRODUCTO - MODIFICACIÓN 3: Reestructurado para botón fijo -->
     <div class="popup-overlay" id="productPopup">
         <div class="popup-content">
             <button class="close-popup" id="closePopup">
@@ -1048,7 +1053,7 @@
             </div>
             
             <div class="popup-right">
-                <div>
+                <div class="popup-right-content">
                     <h2 class="popup-product-name" id="popupProductName">Cargando...</h2>
                     
                     <div class="popup-price">
@@ -1070,8 +1075,10 @@
                             Cargando características...
                         </p>
                     </div>
-
-                    <!-- SECCIÓN: FORMULARIO DE WHATSAPP -->
+                </div>
+                
+                <!-- SECCIÓN: FORMULARIO DE WHATSAPP (AHORA EN PARTE FIJA) -->
+                <div class="popup-right-actions">
                     <div class="whatsapp-section">
                         <button class="whatsapp-btn" id="whatsappBtn">
                             <i class="fab fa-whatsapp"></i> Pedir fabricación por WhatsApp
@@ -1694,31 +1701,28 @@
                 fabricationNotice.classList.add('active');
                 whatsappBtn.innerHTML = '<i class="fab fa-whatsapp"></i> Ocultar formulario';
                 
-                // DESPLAZAMIENTO MEJORADO PARA MÓVIL Y DESKTOP
+                // Desplazar para mostrar el formulario
                 setTimeout(() => {
-                    if (fabricationNotice) {
+                    if (whatsappForm) {
                         const isMobile = window.innerWidth <= 768;
                         
                         if (isMobile) {
-                            // EN MÓVIL: El popup-content tiene scroll completo
+                            // En móvil: El popup-content tiene scroll completo
                             const popupContent = document.querySelector('.popup-content');
                             const popupRect = popupContent.getBoundingClientRect();
-                            const noticeRect = fabricationNotice.getBoundingClientRect();
+                            const formRect = whatsappForm.getBoundingClientRect();
                             
                             // Calcular posición relativa dentro del popup
-                            const relativeTop = noticeRect.top - popupRect.top;
+                            const relativeTop = formRect.top - popupRect.top;
                             
                             // Desplazar solo lo necesario
                             popupContent.scrollTop = relativeTop - 30; // 30px de margen
                         } else {
-                            // EN DESKTOP: Solo popup-right tiene scroll
-                            const popupRight = document.querySelector('.popup-right');
-                            if (popupRight) {
-                                const noticeTop = fabricationNotice.offsetTop;
-                                popupRight.scrollTo({
-                                    top: noticeTop - 20,
-                                    behavior: 'smooth'
-                                });
+                            // En desktop: Solo popup-right-actions es visible, no necesita desplazamiento
+                            // Pero podemos desplazar el popup-right-content si es necesario
+                            const popupRightContent = document.querySelector('.popup-right-content');
+                            if (popupRightContent) {
+                                popupRightContent.scrollTop = popupRightContent.scrollHeight;
                             }
                         }
                     }
