@@ -1,0 +1,103 @@
+{
+  "config": {
+    "nombreTienda": "Moldes.ve",
+    "tagline": "Moldes de silicona y más para tus creaciones",
+    "logo": "https://i.ibb.co/ynbXdH7k/profile-image.jpg",
+    "moneda": "USD",
+    "whatsapp": "584141234567"
+  },
+  "categorias": [
+    {
+      "id": "moldes_silicona",
+      "nombre": "Moldes de Silicona"
+    },
+    {
+      "id": "utensilios",
+      "nombre": "Utensilios"
+    },
+    {
+      "id": "materiales",
+      "nombre": "Materiales"
+    },
+    {
+      "id": "otros",
+      "nombre": "Otros Productos"
+    }
+  ],
+  "productos": [
+    {
+      "id": 1,
+      "nombre": "Molde de silicona para chocolates",
+      "descripcion": "Molde de silicona de alta calidad para hacer chocolates artesanales. Resistente a altas y bajas temperaturas, fácil desmoldado y lavable.",
+      "categoria": "moldes_silicona",
+      "precio": 15.99,
+      "descuento": 10,
+      "tamanos": {
+        "8cm": 15.99,
+        "12cm": 19.99,
+        "15cm": 24.99
+      },
+      "imagenes": [
+        "https://images.unsplash.com/photo-1590099033615-be195f8d575c?w=600&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1570913199992-91d07c140e7a?w-600&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?w=600&auto=format&fit=crop"
+      ],
+      "etiquetas": ["chocolate", "repostería", "artesanal", "regalo"],
+      "activo": true
+    },
+    {
+      "id": 2,
+      "nombre": "Molde para jabones artesanales",
+      "descripcion": "Perfecto para crear jabones con formas únicas. Silicona platino de alta resistencia, flexible y de fácil limpieza.",
+      "categoria": "moldes_silicona",
+      "precio": 12.50,
+      "descuento": 0,
+      "tamanos": {
+        "Pequeño": 12.50,
+        "Mediano": 18.00,
+        "Grande": 25.00
+      },
+      "imagenes": [
+        "https://images.unsplash.com/photo-1560343090-f0409e92791a?w=600&auto=format&fit=crop"
+      ],
+      "etiquetas": ["jabones", "artesanal", "manualidades", "hogar"],
+      "activo": true
+    },
+    {
+      "id": 3,
+      "nombre": "Set de herramientas para repostería",
+      "descripcion": "Set completo de herramientas profesionales para decoración de pasteles y postres. Incluye espátulas, boquillas y más.",
+      "categoria": "utensilios",
+      "precio": 29.99,
+      "descuento": 15,
+      "tamanos": {
+        "Básico": 29.99,
+        "Profesional": 49.99
+      },
+      "imagenes": [
+        "https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=600&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=600&auto=format&fit=crop"
+      ],
+      "etiquetas": ["repostería", "herramientas", "profesional", "cocina"],
+      "activo": true
+    },
+    {
+      "id": 4,
+      "nombre": "Silicona líquida para moldes",
+      "descripcion": "Silicona líquida de grado alimenticio para crear tus propios moldes. No tóxica, resistente y de fácil aplicación.",
+      "categoria": "materiales",
+      "precio": 34.99,
+      "descuento": 5,
+      "tamanos": {
+        "250ml": 34.99,
+        "500ml": 59.99,
+        "1L": 99.99
+      },
+      "imagenes": [
+        "https://images.unsplash.com/photo-1581235720846-2af6c6b0e6f9?w=600&auto=format&fit=crop"
+      ],
+      "etiquetas": ["material", "silicona", "crear moldes", "alimenticio"],
+      "activo": true
+    }
+  ]
+}
